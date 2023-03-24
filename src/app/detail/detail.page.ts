@@ -19,7 +19,7 @@ export class DetailPage implements OnInit{
     console.log(item.param1.id);
     this.lsthackathons=item.param1;
 
-    this.http.get('https://127.0.0.1:8000/api/hackathon/'+ item.param2.id + '/evenements').subscribe(data => {
+    this.http.get('https://127.0.0.1:8000/api/hackathon/'+ item.param1.id + '/evenements').subscribe(data => {
       this.lstevents=data;
       console.log(this.lstevents);
     });
