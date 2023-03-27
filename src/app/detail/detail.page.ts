@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-detail',
@@ -27,5 +28,14 @@ export class DetailPage implements OnInit{
 }
 ngOnInit(){
 
+}
+
+InscInit(item:any){
+  let navExtra: NavigationExtras = {
+    state: {
+      param1: item
+    }
+  };
+  this.router.navigate(['/inscrireatelier'], navExtra);
 }
 }
