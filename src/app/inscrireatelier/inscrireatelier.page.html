@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>S'inscrire à l'atelier ...</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]='myForm' novalidate>
+      <ion-item fill="solid">
+        <ion-label position="floating">Prenom</ion-label>
+        <ion-input type="text" formControlName="prenom"></ion-input>
+        <ion-note slot="helper">Enter a valid prénom</ion-note>
+        <ion-note slot="error">Invalid prénom</ion-note>
+      </ion-item>
+      <ion-item fill="solid">
+        <ion-label position="floating">Nom</ion-label>
+        <ion-input type="text" formControlName="nom"></ion-input>
+        <ion-note slot="helper">Enter a valid nom</ion-note>
+        <ion-note slot="error">Invalid nom</ion-note>
+      </ion-item>
+      <ion-item fill="solid"> 
+        <ion-label position="floating">Email</ion-label>
+        <ion-input type="email" formControlName="mail"></ion-input>
+        <ion-note slot="helper">Enter a valid email</ion-note>
+        <ion-note slot="error">Invalid email</ion-note>
+      </ion-item>
+      <ion-button (click)="confirmeInscrit()" expand="block">S'inscrire à l'atelier</ion-button>
+      <p>{{ handlerMessage }}</p>
+      <p>{{ roleMessage }}</p>
+    </form>
+</ion-content>
