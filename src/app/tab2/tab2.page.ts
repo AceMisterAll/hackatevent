@@ -15,7 +15,6 @@ export class Tab2Page {
   constructor(private http : HttpClient, private router : Router) {
     this.http.get('https://127.0.0.1:8000/api/hackathon').subscribe(data => {
       this.lsthackathons=data;
-      console.log(this.lsthackathons);
     });
   }
   
