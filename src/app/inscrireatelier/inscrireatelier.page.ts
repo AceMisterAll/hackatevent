@@ -54,6 +54,7 @@ export class InscrireatelierPage implements OnInit {
             headers.append("Accept", 'application/json');
             headers.append('Content-Type', 'application/json' );
             this.myForm.value.initiation_id=this.initiation.id;
+
             if (!this.myForm.valid)
             {
               this.handlerMessage = 'Les saisies sont incorrects';

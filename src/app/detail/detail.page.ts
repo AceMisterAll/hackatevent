@@ -13,11 +13,11 @@ export class DetailPage implements OnInit{
   lsthackathons:any;
   lstevents:any
 
+
   constructor(private router: Router, private http : HttpClient, private activeRoute: ActivatedRoute) {
   this.activeRoute.queryParams.subscribe(params =>{
     let item:any;
     item=this.router.getCurrentNavigation()?.extras.state;
-    console.log(item.param1.id);
     this.lsthackathons=item.param1;
 
     this.http.get('https://127.0.0.1:8000/api/hackathon/'+ item.param1.id + '/evenements').subscribe(data => {
@@ -42,4 +42,13 @@ InscInit(item:any){
   };
   this.router.navigate(['/inscrireatelier'], navExtra);
 }
+addToFavorites() {
+  let favorites: any[] = JSON.parse(localStorage.getItem('favorites') || '[]');
+  const isFavorite = favorites.some((fav: any) => fav.id === this.lsthackathons.id);
+
+  if (!isFavorite) {
+    favorites.push(this.lsthackathons);
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+  }
 }
+} 
