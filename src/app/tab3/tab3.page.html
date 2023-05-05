@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Mes Hackathons Favoris
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let favorite of favorites">
+      <ion-avatar slot="start">
+        <img [src]="favorite.image" alt="Hackathon Logo">
+      </ion-avatar>
+      <ion-label>
+        <h2>{{ favorite.theme }}</h2>
+        <p>{{ favorite.dateDebut.date }}</p>
+      </ion-label>
+      <ion-button (click)="removeFavorite(favorite)" color="danger" slot="end">Supprimer</ion-button>
+    </ion-item>
+  </ion-list>
+</ion-content>

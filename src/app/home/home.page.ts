@@ -1,7 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { NavigationExtras } from '@angular/router';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -10,20 +8,10 @@ import { Router } from '@angular/router';
 })
 export class homePage {
 
-  lsthackathons:any;
-
-  constructor(private http : HttpClient, private router : Router) {
+  constructor(private http : HttpClient) {
     this.http.get('https://127.0.0.1:8000/api/hackathon').subscribe(data => {
-      this.lsthackathons=data;
+      console.log(data);
     });
   }
-  
-  AffDetail(item:any){
-    let navExtra: NavigationExtras = {
-      state: {
-        param1: item
-      }
-    };
-    this.router.navigate(['/detail'], navExtra);
-  }
+
 }
