@@ -42,4 +42,13 @@ InscInit(item:any){
   };
   this.router.navigate(['/inscrireatelier'], navExtra);
 }
+addToFavorites() {
+  let favorites: any[] = JSON.parse(localStorage.getItem('favorites') || '[]');
+  const isFavorite = favorites.some((fav: any) => fav.id === this.lsthackathons.id);
+
+  if (!isFavorite) {
+    favorites.push(this.lsthackathons);
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+  }
+}
 } 
