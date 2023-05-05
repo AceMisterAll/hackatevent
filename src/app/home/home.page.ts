@@ -26,4 +26,5 @@ export class homePage {
     };
     this.router.navigate(['/detail'], navExtra);
   }
+
 }
