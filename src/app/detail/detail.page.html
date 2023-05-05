@@ -15,14 +15,14 @@
       <ion-card-title>{{lsthackathons.theme}}</ion-card-title>
       <ion-card-subtitle>{{lsthackathons.dateDebut}} </ion-card-subtitle>
     </ion-card-header>
-  
+
     <ion-card-content>
       {{lsthackathons.description}}
     </ion-card-content>
   </ion-card>
   <ion-card>
     <ion-list>
-      <ion-item id="RedirectFormInit" *ngFor="let item of lstevents" > 
+      <ion-item id="RedirectFormInit" *ngFor="let item of lstevents" >
         <ion-label>
           <h2>{{item.libelleEvenement}}</h2>
           <p>Date : {{item.date}}</p>

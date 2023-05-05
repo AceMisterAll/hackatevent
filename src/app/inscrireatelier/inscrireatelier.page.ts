@@ -49,22 +49,23 @@ export class InscrireatelierPage implements OnInit {
           text: 'Oui',
           role: 'confirm',
           handler: () => {
-            
+
             var headers = new Headers();
             headers.append("Accept", 'application/json');
             headers.append('Content-Type', 'application/json' );
             this.myForm.value.initiation_id=this.initiation.id;
-            if (!this.myForm.valid) 
+
+            if (!this.myForm.valid)
             {
               this.handlerMessage = 'Les saisies sont incorrects';
             }
-            else 
+            else
             {
               this.handlerMessage = '';
               this.http.post("https://127.0.0.1:8000/api/newinscrit", this.myForm.value)
-              .subscribe(data => {});
+                .subscribe(data => {});
             }
-            },
+          },
         },
       ],
     });
