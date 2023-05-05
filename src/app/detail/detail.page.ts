@@ -1,54 +1,69 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
-import { NavigationExtras } from '@angular/router';
+import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-detail',
   templateUrl: './detail.page.html',
   styleUrls: ['./detail.page.scss'],
 })
-export class DetailPage implements OnInit{
+export class DetailPage implements OnInit {
+  lsthackathons: any;
+  lstevents: any;
 
-  lsthackathons:any;
-  lstevents:any
+  constructor(
+    private router: Router,
+    private http: HttpClient,
+    private activeRoute: ActivatedRoute,
+    private renderer: Renderer2,
+    private storage: Storage
+  ) {}
 
+  ngOnInit() {
+    this.activeRoute.queryParams.subscribe(params => {
+      let item: any;
+      item = this.router.getCurrentNavigation()?.extras.state;
+      this.lsthackathons = item.param1;
 
-  constructor(private router: Router, private http : HttpClient, private activeRoute: ActivatedRoute) {
-  this.activeRoute.queryParams.subscribe(params =>{
-    let item:any;
-    item=this.router.getCurrentNavigation()?.extras.state;
-    this.lsthackathons=item.param1;
-
-    this.http.get('https://127.0.0.1:8000/api/hackathon/'+ item.param1.id + '/evenements').subscribe(data => {
-      this.lstevents=data;
+      this.http
+        .get('https://127.0.0.1:8000/api/hackathon/' + item.param1.id + '/evenements')
+        .subscribe(data => {
+          this.lstevents = data;
+        });
     });
-  })
-}
-ngOnInit(){
+  }
 
-}
+  isPlacedispo(nb: any, max: any) {
+    return nb < max;
+  }
 
-isPlacedispo(nb:any,max:any){
-  if(nb < max) return true;
-  else return false;
-}
+  InscInit(item: any) {
+    let navExtra: NavigationExtras = {
+      state: {
+        param1: item,
+      },
+    };
+    this.router.navigate(['/inscrireatelier'], navExtra);
+  }
 
-InscInit(item:any){
-  let navExtra: NavigationExtras = {
-    state: {
-      param1: item
+  addToFavorites() {
+    this.storage.get('favorites').then(favorites => {
+      const updatedFavorites = favorites || [];
+      const isFavorite = updatedFavorites.some((fav: any) => fav.id === this.lsthackathons.id);
+
+      if (!isFavorite) {
+        updatedFavorites.push(this.lsthackathons);
+        this.storage.set('favorites', updatedFavorites);
+        this.hideAddToFavoritesButton(); // Masquer le bouton
+      }
+    });
+  }
+
+  hideAddToFavoritesButton() {
+    const addToFavoritesButton = document.getElementById('addToFavoritesButton');
+    if (addToFavoritesButton) {
+      this.renderer.setStyle(addToFavoritesButton, 'display', 'none');
     }
-  };
-  this.router.navigate(['/inscrireatelier'], navExtra);
-}
-addToFavorites() {
-  let favorites: any[] = JSON.parse(localStorage.getItem('favorites') || '[]');
-  const isFavorite = favorites.some((fav: any) => fav.id === this.lsthackathons.id);
-
-  if (!isFavorite) {
-    favorites.push(this.lsthackathons);
-    localStorage.setItem('favorites', JSON.stringify(favorites));
   }
 }
-} 
