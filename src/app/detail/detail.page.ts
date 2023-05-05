@@ -29,6 +29,11 @@ ngOnInit(){
 
 }
 
+isPlacedispo(nb:any,max:any){
+  if(nb < max) return true;
+  else return false;
+}
+
 InscInit(item:any){
   let navExtra: NavigationExtras = {
     state: {

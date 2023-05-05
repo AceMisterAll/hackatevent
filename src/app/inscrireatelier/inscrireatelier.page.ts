@@ -15,10 +15,8 @@ export class InscrireatelierPage implements OnInit {
   submitted = false;
   inscrits = {};
 
-  handlerMessage = '';
-  roleMessage = '';
-
   initiation:any;
+  handlerMessage = '';
 
   constructor(public http: HttpClient, public formBuilder: FormBuilder, private alertController: AlertController,  private activeRoute: ActivatedRoute, private router: Router,) {
     this.myForm = this.formBuilder.group({
@@ -33,7 +31,6 @@ export class InscrireatelierPage implements OnInit {
     this.activeRoute.queryParams.subscribe(params =>{
       let item:any;
       item=this.router.getCurrentNavigation()?.extras.state;
-      console.log(item.param1.id);
       this.initiation=item.param1;
     })
   }
@@ -46,21 +43,27 @@ export class InscrireatelierPage implements OnInit {
           text: 'Non',
           role: 'cancel',
           handler: () => {
-            this.handlerMessage = 'Alert canceled';
           },
         },
         {
           text: 'Oui',
           role: 'confirm',
           handler: () => {
-            this.handlerMessage = 'Alert confirmed';
 
             var headers = new Headers();
             headers.append("Accept", 'application/json');
             headers.append('Content-Type', 'application/json' );
             this.myForm.value.initiation_id=this.initiation.id;
-            this.http.post("https://127.0.0.1:8000/api/newinscrit", this.myForm.value)
-              .subscribe(data => {});
+            if (!this.myForm.valid)
+            {
+              this.handlerMessage = 'Les saisies sont incorrects';
+            }
+            else
+            {
+              this.handlerMessage = '';
+              this.http.post("https://127.0.0.1:8000/api/newinscrit", this.myForm.value)
+                .subscribe(data => {});
+            }
           },
         },
       ],
@@ -69,7 +72,6 @@ export class InscrireatelierPage implements OnInit {
     await alert.present();
 
     const { role } = await alert.onDidDismiss();
-    this.roleMessage = `Dismissed with role: ${role}`;
   }
 
   ngOnInit() {  }

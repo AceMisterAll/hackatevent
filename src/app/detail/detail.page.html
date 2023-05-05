@@ -15,20 +15,23 @@
       <ion-card-title>{{lsthackathons.theme}}</ion-card-title>
       <ion-card-subtitle>{{lsthackathons.dateDebut}} </ion-card-subtitle>
     </ion-card-header>
-  
+
     <ion-card-content>
       {{lsthackathons.description}}
     </ion-card-content>
   </ion-card>
   <ion-card>
     <ion-list>
-      <ion-item *ngFor="let item of lstevents" (click)="InscInit(item)"> 
+      <ion-item id="RedirectFormInit" *ngFor="let item of lstevents" >
         <ion-label>
           <h2>{{item.libelleEvenement}}</h2>
           <p>Date : {{item.date}}</p>
           <p>Heure : {{item.heure}}</p>
           <p>Salle : {{item.salle}}</p>
+          <p>Places reservées : </p>
+          <p>{{item.nbParticipant}}/{{item.place_max}}</p>
         </ion-label>
+        <ion-button *ngIf="isPlacedispo(item.nbParticipant,item.place_max)" (click)="InscInit(item)">S'inscrire</ion-button>
       </ion-item>
     </ion-list>
   </ion-card>
