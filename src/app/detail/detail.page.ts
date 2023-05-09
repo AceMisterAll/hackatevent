@@ -21,6 +21,7 @@ export class DetailPage implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.storage.create();
     this.activeRoute.queryParams.subscribe(params => {
       let item: any;
       item = this.router.getCurrentNavigation()?.extras.state;
@@ -32,6 +33,26 @@ export class DetailPage implements OnInit {
           this.lstevents = data;
         });
     });
+
+    let favorites: any[] = JSON.parse(localStorage.getItem('favorites') || '[]');
+    let isFavorite = favorites.some((fav: any) => fav.id === this.lsthackathons.id);
+    let btn_favoris = document.getElementById('addToFavoritesButton');
+
+    if (!isFavorite) {
+      favorites.push(this.lsthackathons);
+      localStorage.setItem('favorites', JSON.stringify(favorites));
+      this.renderer.setStyle(btn_favoris, 'display', 'flex');
+    }
+    else {
+      this.renderer.setStyle(btn_favoris, 'display', 'none');
+    }
+  }
+
+  addToFavorites() {
+    let favorites: any[] = JSON.parse(localStorage.getItem('favorites') || '[]');
+    let btn_favoris = document.getElementById('addToFavoritesButton');
+    this.renderer.setStyle(btn_favoris, 'display', 'none');
+    favorites.push(this.lsthackathons);
   }
 
   isPlacedispo(nb: any, max: any) {
@@ -45,25 +66,5 @@ export class DetailPage implements OnInit {
       },
     };
     this.router.navigate(['/inscrireatelier'], navExtra);
-  }
-
-  addToFavorites() {
-    this.storage.get('favorites').then(favorites => {
-      const updatedFavorites = favorites || [];
-      const isFavorite = updatedFavorites.some((fav: any) => fav.id === this.lsthackathons.id);
-
-      if (!isFavorite) {
-        updatedFavorites.push(this.lsthackathons);
-        this.storage.set('favorites', updatedFavorites);
-        this.hideAddToFavoritesButton(); // Masquer le bouton
-      }
-    });
-  }
-
-  hideAddToFavoritesButton() {
-    const addToFavoritesButton = document.getElementById('addToFavoritesButton');
-    if (addToFavoritesButton) {
-      this.renderer.setStyle(addToFavoritesButton, 'display', 'none');
-    }
   }
 }
