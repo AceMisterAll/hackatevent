@@ -9,12 +9,9 @@
 <ion-content>
   <ion-list>
     <ion-item *ngFor="let favorite of favorites">
-      <ion-avatar slot="start">
-        <img [src]="favorite.image" alt="Hackathon Logo">
-      </ion-avatar>
       <ion-label>
-        <h2>{{ favorite.theme }}</h2>
-        <p>{{ favorite.dateDebut.date }}</p>
+        <h2>{{ favorite.libelleEvenement }}</h2>
+        <p>{{ favorite.date }}</p>
       </ion-label>
       <ion-button (click)="removeFavorite(favorite)" color="danger" slot="end">Supprimer</ion-button>
     </ion-item>
