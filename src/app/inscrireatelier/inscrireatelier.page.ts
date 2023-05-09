@@ -28,11 +28,15 @@ export class InscrireatelierPage implements OnInit {
           Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
 
     })
-    this.activeRoute.queryParams.subscribe(params =>{
-      let item:any;
-      item=this.router.getCurrentNavigation()?.extras.state;
-      this.initiation=item.param1;
+    this.activeRoute.queryParams.subscribe(params => {
+      let item: any;
+      let navigation = this.router.getCurrentNavigation();
+      if (navigation && navigation.extras && navigation.extras.state) {
+        item = navigation.extras.state;
+        this.initiation = item.param1;
+      }
     })
+
   }
 
   async confirmeInscrit() {
@@ -75,6 +79,5 @@ export class InscrireatelierPage implements OnInit {
     const { role } = await alert.onDidDismiss();
   }
 
-  ngOnInit() {  }
-
+  ngOnInit() {}
 }

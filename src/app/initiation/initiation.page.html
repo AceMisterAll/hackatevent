@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{uneinitiation.libelleEvenement}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-icon class="starfav" [name]="nameIcon" (click)="addToFavorites()"></ion-icon>
+      <ion-card-title>{{uneinitiation.libelleEvenement}}</ion-card-title>
+      <ion-card-subtitle>{{uneinitiation.date}} </ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <p>Heure : {{uneinitiation.heure}}</p>
+      <p>Durée : {{uneinitiation.duree}}</p>
+      <p>Salle : {{uneinitiation.salle}}</p>
+      <p>Places reservées : </p>
+      <p>{{uneinitiation.nbParticipant}}/{{uneinitiation.place_max}}</p>
+    </ion-card-content>
+    <ion-button *ngIf="isPlacedispo(uneinitiation.nbParticipant,uneinitiation.place_max)" (click)="InscInit(uneinitiation)">S'inscrire</ion-button>
+  </ion-card>
+</ion-content>
