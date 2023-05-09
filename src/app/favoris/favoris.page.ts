@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Storage} from "@ionic/storage";
 
 @Component({
   selector: 'app-favoris',
@@ -8,21 +9,21 @@ import { Component, OnInit } from '@angular/core';
 export class favorisPage implements OnInit {
   favorites: any[] = [];
 
-  constructor() {}
+  constructor(
+    private storage: Storage
+  ) {}
 
-  ngOnInit() {
-    this.getFavorites();
+  ionViewWillEnter() {
+    let favorisData = localStorage.getItem('favorites');
+    this.favorites = JSON.parse(favorisData || '[]');
   }
 
-  getFavorites() {
-    const favoritesData = localStorage.getItem('favorites');
-    if (favoritesData) {
-      this.favorites = JSON.parse(favoritesData);
-    }
+  ngOnInit() {
+    this.ionViewWillEnter();
   }
 
   removeFavorite(favorite: any) {
-    const index = this.favorites.findIndex((fav: any) => fav.id === favorite.id);
+    let index = this.favorites.findIndex((fav: any) => fav.id === favorite.id);
     if (index > -1) {
       this.favorites.splice(index, 1);
       localStorage.setItem('favorites', JSON.stringify(this.favorites));
